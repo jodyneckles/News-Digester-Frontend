@@ -121,10 +121,12 @@ class Digest extends Component {
         <img src='' alt='' />
         <h1>NEWS DIGEST</h1>
         <div>
-          <StorySearch
-            style={{ margin: '0 auto', maxWidth: 800 }}
-            handleSearchInput={handleSearchInput}
-          />
+          {
+            !this.state.showFilters && <StorySearch
+              style={{ margin: '0 auto', maxWidth: 800 }}
+              handleSearchInput={handleSearchInput}
+            />
+          }
 
           {this.state.showFilters
             ? <button className={'close-btn'} onClick={this.handleShowFilters}>CLOSE</button>
