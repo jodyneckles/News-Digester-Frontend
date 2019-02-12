@@ -1,0 +1,29 @@
+/* .story-search {
+    text-align: center;
+
+    width: calc(50% - 12px);
+    border-radius: 3px;
+    border: 0px;
+    padding: 8px;
+    font-size: 0.9em;
+    background: #303247;
+} */
+
+.search-bar-container {
+    display: flex;
+    height: 100px;
+    align-items: center;
+    justify-content: center;
+    /* margin-right:auto;  */
+}
+
+.search-bar {
+    position: absolute;
+    border:1px solid #000;
+    background-color: #303247;
+    width: calc(50%);
+    height: 20px;
+    border-radius: 5px;
+    padding: 1em 2em;
+    font-size: 1.2em;
+}

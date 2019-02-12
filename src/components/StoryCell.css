@@ -1,0 +1,62 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #16171b;
+
+} 
+
+#grid-wrapper {
+  width: 100%;
+  margin: 0 auto 20px auto;
+  text-align: center;
+}
+
+.card {
+  position: relative;
+  display: inline-block;
+  width: 249px;
+  background: #323047;
+  margin: 20px;
+  border-radius: 0 0 5px 5px;
+  overflow: hidden;
+  text-align: initial;
+  border-radius: 5px;
+}
+
+
+.card-img {
+  position: absolute;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%);
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.card-img-wrapper .heart-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+}
+
+.title-bar {
+  color:#FFFFFF;  
+  padding: 15px;
+  margin: 0;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-style: normal;
+  line-height: normal;
+  font-size: 11px;
+  text-align: left;
+  overflow-wrap: break-word */
+}
+

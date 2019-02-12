@@ -1,0 +1,9 @@
+* {
+    box-sizing: border-box;
+}
+
+.popup_is_shown {
+    overflow: hidden;
+    padding-right: 13px;
+    height: 100vh;
+}

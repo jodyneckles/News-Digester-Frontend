@@ -1,0 +1,10 @@
+.btn {
+    background: none;
+    border: none;
+    color: #fff;
+    outline: none;
+}
+.clicked {
+    background-color: #eee;
+    color: #000;
+}
