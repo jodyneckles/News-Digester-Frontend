@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import StorySearch from '../../components/StorySearch'
 import StoryFilterSelector from '../../containers/StoryFilterSelector/StoryFilterSelector'
 import StoryFilterResultsBar from '../StoryFilterResultsBar/StoryFilterResultsBar'
@@ -118,8 +117,8 @@ class Digest extends Component {
     const { toggleLike, handleSearchInput, setSelectedStory, getSelectedStory, clearSelectedStory, filteredStories, toggleFilter } = this
     return (
       <div className='App'>
-        <img src='' alt='' />
-        <h1>NEWS DIGEST</h1>
+        <img src={require('../../icons/news-digest-logo.svg')} alt='news-digest-logo' />
+        <h1 className='news-digest-title'>NEWS DIGEST</h1>
         <div>
           {
             !this.state.showFilters && <StorySearch
