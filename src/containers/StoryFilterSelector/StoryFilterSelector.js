@@ -3,13 +3,12 @@ import StoryMetadataBtn from '../../components/StoryMetadataBtn'
 
 const StoryFilterSelector = props => {
   const { filterTags, toggleFilter } = props
-  console.log(filterTags)
+  // console.log(filterTags)
   return (
     <div>
       <div className='website-tags'>
         {
-          filterTags.websites.map((website, index) => {
-            
+          filterTags.websites.map((website, index) => {       
             return <StoryMetadataBtn
               type={'websites'}
               filterItem={website}

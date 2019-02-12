@@ -67,9 +67,10 @@ class Digest extends Component {
   // areFiltersEmpty = () => this.state.selectedFilters.website.length
 
   filteredStories = () => {
+    const { selectedFilters } = this.state
     return this.getStories().filter(story =>
-      this.state.selectedFilters.websites.length ? this.state.selectedFilters.websites.includes(story.website.name) : true
-    ).filter(story => this.state.selectedFilters.categories.length ? this.state.selectedFilters.categories.includes(story.category.name) : true)
+      selectedFilters.websites.length ? selectedFilters.websites.includes(story.website.name) : true
+    ).filter(story => selectedFilters.categories.length ? selectedFilters.categories.includes(story.category.name) : true)
   }
 
   toggleFilter = (value, type) => {
@@ -123,7 +124,11 @@ class Digest extends Component {
             style={{ margin: '0 auto', maxWidth: 800 }}
             handleSearchInput={handleSearchInput}
           />
-          <button className='filter-btn' onClick={this.handleShowFilters}>FILTER</button>
+
+          {this.state.showFilters
+            ? <button className={'close-btn'} onClick={this.handleShowFilters}>CLOSE</button>
+            : <button className={this.state.showFilters && 'filter-btn'} onClick={this.handleShowFilters}>FILTER</button>
+          }
           {
             this.state.showFilters &&
             <StoryFilterSelector

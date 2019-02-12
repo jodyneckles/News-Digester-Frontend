@@ -6,3 +6,11 @@
 .show_story.content_wrapper {
 
 }
+
+.filter-btn {
+    overflow: hidden;
+}
+
+.close-btn {
+    overflow: hidden;
+}

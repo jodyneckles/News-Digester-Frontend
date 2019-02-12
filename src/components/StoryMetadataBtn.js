@@ -10,10 +10,10 @@ class StoryMetadataBtn extends React.Component {
     this.setState({
       clicked: !this.state.clicked
     })
+    // console.log(this.props.filterItem)
 
     this.props.toggleFilter(this.props.filterItem, this.props.type)
   }
-
   render () {
     const classes = this.state.clicked ? 'btn clicked' : 'btn'
     const { filterItem } = this.props
