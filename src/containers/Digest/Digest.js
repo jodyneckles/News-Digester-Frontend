@@ -134,6 +134,8 @@ class Digest extends Component {
             <StoryFilterSelector
               filterTags={this.state.filterMetadata}
               toggleFilter={toggleFilter}
+              selectedWebsites={this.state.selectedFilters.websites}
+              selectedCategories={this.state.selectedFilters.categories}
             />
           }
           <button className='saved-stories-btn'>SAVED STORIES</button>

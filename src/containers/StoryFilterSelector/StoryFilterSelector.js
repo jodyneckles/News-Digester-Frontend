@@ -14,6 +14,7 @@ const StoryFilterSelector = props => {
               filterItem={website}
               key={index}
               toggleFilter={toggleFilter}
+              isSelected={props.selectedWebsites.includes(website)}
             />
           })
         }
@@ -27,6 +28,7 @@ const StoryFilterSelector = props => {
               filterItem={category}
               key={index}
               toggleFilter={toggleFilter}
+              isSelected={props.selectedCategories.includes(category)}
             />
           })
         }
