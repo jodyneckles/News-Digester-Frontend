@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import StorySearch from '../../components/StorySearch'
 import StoryFilterSelector from '../../containers/StoryFilterSelector/StoryFilterSelector'
+import StoryFilterResultsBar from '../StoryFilterResultsBar/StoryFilterResultsBar'
 import StoryContent from '../../components/StoryContent/StoryContent'
 import Stories from '../Stories/Stories'
 import './Digest.css'
@@ -131,12 +132,21 @@ class Digest extends Component {
           }
           {
             this.state.showFilters &&
-            <StoryFilterSelector
+              <StoryFilterSelector
+                filterTags={this.state.filterMetadata}
+                toggleFilter={toggleFilter}
+                selectedWebsites={this.state.selectedFilters.websites}
+                selectedCategories={this.state.selectedFilters.categories}
+              />
+          }
+          {
+            !this.state.showFilters && <StoryFilterResultsBar
               filterTags={this.state.filterMetadata}
               toggleFilter={toggleFilter}
               selectedWebsites={this.state.selectedFilters.websites}
               selectedCategories={this.state.selectedFilters.categories}
             />
+
           }
           <button className='saved-stories-btn'>SAVED STORIES</button>
 

@@ -8,7 +8,7 @@ const StoryFilterSelector = props => {
     <div>
       <div className='website-tags'>
         {
-          filterTags.websites.map((website, index) => {       
+          filterTags.websites.map((website, index) => {
             return <StoryMetadataBtn
               type={'websites'}
               filterItem={website}
