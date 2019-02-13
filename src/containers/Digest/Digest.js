@@ -142,10 +142,12 @@ class Digest extends Component {
     const cheerio = require('cheerio')
     const axios = require('axios')
     axios.get(url).then((res) => {
-      const nodeList = cheerio.load(res.data)(".body-content, p").html()
-      console.log(typeof (nodeList))
+      const nodeList = cheerio.load(res.data)(".body-content p")
+      const newList = nodeList.filter(i => ![...nodeList[i].children].some(el => el.name == "span"))
+      console.log(nodeList)
+      console.log(newList)
       this.setState({
-        selectedStoryContentText: nodeList
+        selectedStoryContentText: newList
       })
       // arr.map(elem => elem.children[0].data)[7]
 
