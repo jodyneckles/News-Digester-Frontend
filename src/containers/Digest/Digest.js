@@ -10,6 +10,8 @@ import './Digest.css'
 
 const newStoriesUrl = 'http://localhost:3001/api/v1/stories'
 const savedStoriesUrl = 'http://localhost:3001/api/v1/saved-stories'
+const cheerio = require('cheerio')
+const axios = require('axios')
 
 class Digest extends Component {
   state = {
@@ -114,7 +116,7 @@ class Digest extends Component {
     const app = document.querySelector('.App')
     app.classList.add('popup_is_shown')
     this.setState({ selectedStory: story })
-    this.retrieveStoryContentText(story.link)
+    this.retrieveStoryContentText(story)
   }
 
   getSelectedStory = story => this.state.stories.find(stateStory => stateStory.id === story.id)
@@ -138,20 +140,45 @@ class Digest extends Component {
     })
   }
 
-  retrieveStoryContentText = (url) => {
-    const cheerio = require('cheerio')
-    const axios = require('axios')
-    axios.get(url).then((res) => {
-      const nodeList = cheerio.load(res.data)(".body-content p")
-      const newList = nodeList.filter(i => ![...nodeList[i].children].some(el => el.name == "span"))
-      console.log(nodeList)
-      console.log(newList)
+  scraperIndependent = (story) => {
+    const storyUrl = story.link
+    axios.get(storyUrl).then((res) => {
+      const nodeList = cheerio.load(res.data)('.body-content p')
+      const newList = nodeList.filter(i => ![...nodeList[i].children].some(el => el.name === 'span'))
       this.setState({
         selectedStoryContentText: newList
       })
-      // arr.map(elem => elem.children[0].data)[7]
-
     })
+  }
+
+  scraperGuardian = (story) => {
+    console.log(`'this is a ' ${story.website.name}`)
+  }
+
+  scraperAljazeera = (story) => {
+    console.log(`'this is a ' ${story.website.name}`)
+  }
+
+  scraperReuters = (story) => {
+    console.log(`'this is a ' ${story.website.name}`)
+  }
+
+  scraperBBC = (story) => {
+    console.log(`this is a ${story.website.name} story`)
+  }
+
+  retrieveStoryContentText = (story) => {
+    const storyScrapeResult = {
+      'Independent': this.scraperIndependent(story),
+      'Guardian': this.scraperGuardian(story),
+      'Aljazeera': this.scraperAljazeera(story),
+      'Reuters': this.scraperReuters(story),
+      'BBC': this.scraperBBC(story)
+    }
+    // debugger
+
+    const website = story.website.name
+    return storyScrapeResult[website]
   }
 
   render () {
