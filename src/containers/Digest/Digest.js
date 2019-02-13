@@ -26,7 +26,8 @@ class Digest extends Component {
       categories: []
     },
     showFilters: false,
-    showSavedStories: false
+    showSavedStories: false,
+    selectedStoryContentText: undefined
   }
 
   getStoriesFromAPI = () => {
@@ -113,6 +114,7 @@ class Digest extends Component {
     const app = document.querySelector('.App')
     app.classList.add('popup_is_shown')
     this.setState({ selectedStory: story })
+    this.retrieveStoryContentText(story.link)
   }
 
   getSelectedStory = story => this.state.stories.find(stateStory => stateStory.id === story.id)
@@ -133,6 +135,20 @@ class Digest extends Component {
   handleShowSavedStories = () => {
     this.setState({
       showSavedStories: !this.state.showSavedStories
+    })
+  }
+
+  retrieveStoryContentText = (url) => {
+    const cheerio = require('cheerio')
+    const axios = require('axios')
+    axios.get(url).then((res) => {
+      const nodeList = cheerio.load(res.data)(".body-content, p").html()
+      console.log(typeof (nodeList))
+      this.setState({
+        selectedStoryContentText: nodeList
+      })
+      // arr.map(elem => elem.children[0].data)[7]
+
     })
   }
 
@@ -185,6 +201,7 @@ class Digest extends Component {
             />
             <StoryContent
               selectedStory={this.state.selectedStory && getSelectedStory(this.state.selectedStory)}
+              selectedStoryContentText={this.state.selectedStoryContentText}
               toggleLike={toggleLike}
               clearSelectedStory={clearSelectedStory}
             />

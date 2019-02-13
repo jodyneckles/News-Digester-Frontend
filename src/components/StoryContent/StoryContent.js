@@ -2,7 +2,7 @@ import React from 'react'
 import HearthSVG from '../HearthSVG'
 import './StoryContent.css'
 
-const StoryContent = ({ selectedStory, toggleLike, clearSelectedStory }) => {
+const StoryContent = ({ selectedStory, toggleLike, clearSelectedStory, selectedStoryContentText }) => {
   const svgStyle = {
     // position: 'absolute',
     // right: 5,
@@ -31,6 +31,7 @@ const StoryContent = ({ selectedStory, toggleLike, clearSelectedStory }) => {
               filled={selectedStory.liked}
             />
           </div>
+          <div dangerouslySetInnerHTML={{ __html: selectedStoryContentText }} />
           <button onClick={clearSelectedStory}>Go back</button>
         </div>
       }
