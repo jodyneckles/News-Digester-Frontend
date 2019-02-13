@@ -152,33 +152,43 @@ class Digest extends Component {
   }
 
   scraperGuardian = (story) => {
-    console.log(`'this is a ' ${story.website.name}`)
+    // console.log(`'this is a ' ${story.website.name}`)
   }
 
   scraperAljazeera = (story) => {
-    console.log(`'this is a ' ${story.website.name}`)
+    // console.log(`'this is a ' ${story.website.name}`)
   }
 
   scraperReuters = (story) => {
-    console.log(`'this is a ' ${story.website.name}`)
+    const storyUrl = story.link
+    axios.get(storyUrl).then((res) => {
+      const newList = cheerio.load(res.data)('.StandardArticleBody_body p')
+      this.setState({
+        selectedStoryContentText: newList
+      })
+    })
   }
 
   scraperBBC = (story) => {
-    console.log(`this is a ${story.website.name} story`)
+    const storyUrl = story.link
+    axios.get(storyUrl).then((res) => {
+      const newList = cheerio.load(res.data)('.story-body__inner p')
+      this.setState({
+        selectedStoryContentText: newList
+      })
+    })
   }
 
   retrieveStoryContentText = (story) => {
     const storyScrapeResult = {
-      'Independent': this.scraperIndependent(story),
-      'Guardian': this.scraperGuardian(story),
-      'Aljazeera': this.scraperAljazeera(story),
-      'Reuters': this.scraperReuters(story),
-      'BBC': this.scraperBBC(story)
+      'Guardian': this.scraperGuardian,
+      'Al Jazeera': this.scraperAljazeera,
+      'Reuters': this.scraperReuters,
+      'BBC': this.scraperBBC,
+      'Independent': this.scraperIndependent
     }
-    // debugger
-
     const website = story.website.name
-    return storyScrapeResult[website]
+    return (storyScrapeResult[website])(story)
   }
 
   render () {
