@@ -8,7 +8,8 @@ import './Digest.css'
 
 // import { unique } from '../../helpers'
 
-const url = 'http://localhost:3001/api/v1/stories'
+const newStoriesUrl = 'http://localhost:3001/api/v1/stories'
+const savedStoriesUrl = 'http://localhost:3001/api/v1/saved-stories'
 
 class Digest extends Component {
   state = {
@@ -24,12 +25,22 @@ class Digest extends Component {
       websites: [],
       categories: []
     },
-    showFilters: false
+    showFilters: false,
+    showSavedStories: false
   }
 
   getStoriesFromAPI = () => {
-    return fetch(url)
+    return fetch(newStoriesUrl)
       .then(res => res.json())
+  }
+
+  getSavedStoriesFromApi = () => {
+    return fetch(savedStoriesUrl)
+      .then(res => res.json())
+  }
+
+  addLikesToApi = () => {
+
   }
 
   componentDidMount () {
@@ -47,7 +58,13 @@ class Digest extends Component {
       })
   }
 
-  getSearchedStories = (searchQuery) => this.state.stories.filter(story => story.title.toLowerCase().includes(searchQuery.toLowerCase()))
+  getStoriesOrLikeStories = () => {
+    return this.state.showSavedStories
+      ? this.state.stories.filter(story => story.liked)
+      : this.state.stories
+  }
+
+  getSearchedStories = (searchQuery) => this.getStoriesOrLikeStories().filter(story => story.title.toLowerCase().includes(searchQuery.toLowerCase()))
 
   handleSearchInput = (event) => {
     this.setState({
@@ -56,9 +73,9 @@ class Digest extends Component {
   }
 
   getStories = () => {
-    const { stories, searchQuery } = this.state
+    const { searchQuery } = this.state
     if (searchQuery === undefined) {
-      return stories
+      return this.getStoriesOrLikeStories()
     } else {
       return this.getSearchedStories(searchQuery)
     }
@@ -113,6 +130,12 @@ class Digest extends Component {
     })
   }
 
+  handleShowSavedStories = () => {
+    this.setState({
+      showSavedStories: !this.state.showSavedStories
+    })
+  }
+
   render () {
     const { toggleLike, handleSearchInput, setSelectedStory, getSelectedStory, clearSelectedStory, filteredStories, toggleFilter } = this
     return (
@@ -149,7 +172,10 @@ class Digest extends Component {
             />
 
           }
-          <button className='saved-stories-btn'>SAVED STORIES</button>
+          {this.state.showSavedStories
+            ? <button className={'saved-stories-back-to-feed-btn'} onClick={this.handleShowSavedStories}>BACK TO FEED</button>
+            : <button className={this.state.showSavedStories && 'saved-stories-btn'} onClick={this.handleShowSavedStories}>SAVED STORIES</button>
+          }
 
           <div className={this.state.selectedStory ? 'show_story content_wrapper' : 'content_wrapper'}>
             <Stories
