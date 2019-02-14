@@ -162,12 +162,15 @@ class Digest extends Component {
   }
 
   scraperGuardian = (story) => {
-    // console.log(`'this is a ' ${story.website.name}`)
+    const storyUrl = story.link
+    axios.get(storyUrl).then((res) => {
+      const newList = cheerio.load(res.data)('.content__article-body p')
+      this.setState({
+        selectedStoryContentText: newList
+      })
+    })
   }
 
-  scraperAljazeera = (story) => {
-    // console.log(`'this is a ' ${story.website.name}`)
-  }
 
   scraperReuters = (story) => {
     const storyUrl = story.link
@@ -194,7 +197,6 @@ class Digest extends Component {
   retrieveStoryContentText = (story) => {
     const storyScrapeResult = {
       'Guardian': this.scraperGuardian,
-      'Al Jazeera': this.scraperAljazeera,
       'Reuters': this.scraperReuters,
       'BBC': this.scraperBBC,
       'Independent': this.scraperIndependent
