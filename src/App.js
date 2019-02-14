@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div className='App'>
         <Route exact path='/' component={LoginPage} />
-        <Route path='/stories' component={Digest} />
+        <Digest />
       </div>
     )
   }
