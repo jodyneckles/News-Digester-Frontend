@@ -108,7 +108,11 @@ class Digest extends Component {
 
   toggleLike = (event, id) => {
     event.stopPropagation()
-    const likeStories = this.state.stories.map(story =>
+    event.preventDefault()
+
+    // console.log(this.state.stories)
+    const storyClone = [...this.state.stories]
+    const likeStories = storyClone.map(story =>
       story.id === id ? { ...story, liked: !story.liked } : story
     )
     this.setState({ stories: likeStories })
@@ -171,7 +175,6 @@ class Digest extends Component {
     })
   }
 
-
   scraperReuters = (story) => {
     const storyUrl = story.link
     axios.get(storyUrl).then((res) => {
@@ -208,7 +211,6 @@ class Digest extends Component {
 
   render () {
     const { toggleLike, handleSearchInput, setSelectedStory, getSelectedStory, clearSelectedStory, filteredStories, toggleFilter } = this
-    console.log(this.state.selectedStory)
     return (
       <div className='App'>
         <img src={require('../../icons/news-digest-logo.svg')} alt='news-digest-logo' />
