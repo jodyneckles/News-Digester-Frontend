@@ -14,6 +14,8 @@ const newStoriesUrl = 'http://localhost:3001/api/v1/stories'
 const savedStoriesUrl = 'http://localhost:3001/api/v1/saved-stories'
 const cheerio = require('cheerio')
 const axios = require('axios')
+const baseURL = "http://localhost:3001/api/v1/"
+const JSON = require('circular-json');
 
 class Digest extends Component {
   state = {
@@ -31,7 +33,8 @@ class Digest extends Component {
     },
     showFilters: false,
     showSavedStories: false,
-    selectedStoryContentText: undefined
+    selectedStoryContentText: undefined,
+    currentUserID: 1
   }
 
   getStoriesFromAPI = () => {
@@ -44,9 +47,6 @@ class Digest extends Component {
       .then(res => res.json())
   }
 
-  addLikesToApi = () => {
-
-  }
 
   componentDidMount () {
     this.getStoriesFromAPI()
@@ -106,17 +106,35 @@ class Digest extends Component {
     })
   }
 
+  createLikeInServer = id => {
+    fetch(baseURL + "user_stories", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            story_id: id,
+            user_id: this.state.currentUserID
+        })
+      })
+  }
+
+  deleteLikeInServer = id => {
+    console.log("Like deleted")
+  }
+
   toggleLike = (event, id) => {
     event.stopPropagation()
     event.preventDefault()
-
-    // console.log(this.state.stories)
+    const selectedStory = this.state.stories.find(stateStory => stateStory.id === parseInt(id))
     const storyClone = [...this.state.stories]
     const likeStories = storyClone.map(story =>
       story.id === id ? { ...story, liked: !story.liked } : story
     )
     this.setState({ stories: likeStories })
-  }
+    selectedStory.liked ? this.deleteLikeInServer(id) : this.createLikeInServer(id)
+    }
 
   setSelectedStory = story => {
     const app = document.querySelector('.App')
@@ -124,6 +142,8 @@ class Digest extends Component {
     this.setState({ selectedStory: story })
     this.retrieveStoryContentText(story)
   }
+
+
 
   getSelectedStory = id => {
     const selectedStory = this.state.stories.find(stateStory => stateStory.id === parseInt(id))
