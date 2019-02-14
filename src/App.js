@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import LoginPage from './containers/LoginPage/LoginPage'
 import Digest from './containers/Digest/Digest'
+import PathNotFound from './components/PathNotFound/PathNotFound'
 
+import './components/PathNotFound/PathNotFound.css'
 import './App.css';
 
 class App extends Component {
   render () {
     return (
-      <div className='App'>
+      <Switch className='App'>
         <Route exact path='/' component={LoginPage} />
-        <Digest />
-      </div>
+        <Route path='/stories' component={Digest} />
+        <Route component={PathNotFound} />
+      </Switch>
     )
   }
 }

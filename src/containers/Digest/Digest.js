@@ -215,7 +215,7 @@ class Digest extends Component {
       <div className='App'>
         <img src={require('../../icons/news-digest-logo.svg')} alt='news-digest-logo' />
         <h1 className='news-digest-title'>NEWS DIGEST</h1>
-        <button>Logout</button>
+        <Link to='/'><button>Logout</button></Link>
 
         <div>
           {
@@ -249,7 +249,7 @@ class Digest extends Component {
           }
           {this.state.showSavedStories
             ? <Link to='/stories'><button className={'saved-stories-back-to-feed-btn'} onClick={this.handleShowSavedStories}>BACK TO FEED</button></Link>
-            : <Link to='/saved-stories'><button className={this.state.showSavedStories && 'saved-stories-btn'} onClick={this.handleShowSavedStories}>SAVED STORIES</button></Link>
+            : <Link to='/stories/saved'><button className={this.state.showSavedStories && 'saved-stories-btn'} onClick={this.handleShowSavedStories}>SAVED STORIES</button></Link>
           }
 
           <div className={this.state.selectedStory ? 'show_story content_wrapper' : 'content_wrapper'}>
