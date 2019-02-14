@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import HearthSVG from './HearthSVG'
 import './StoryCell.css'
@@ -20,7 +21,7 @@ const StoryCell = ({ story, toggleLike, setSelectedStory }) => {
   }
 
   return (
-    <div className='card'>
+    <Link to={`/stories/${story.id}`} className='card'>
       <div
         style={style}
         className='card-img-wrapper'
@@ -37,7 +38,7 @@ const StoryCell = ({ story, toggleLike, setSelectedStory }) => {
       <p className='title-bar'>
         {story.title}
       </p>
-    </div>
+    </Link>
 
   )
 }

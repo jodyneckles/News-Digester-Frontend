@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Route, Link } from 'react-router-dom'
+
 import StorySearch from '../../components/StorySearch'
 import StoryFilterSelector from '../../containers/StoryFilterSelector/StoryFilterSelector'
 import StoryFilterResultsBar from '../StoryFilterResultsBar/StoryFilterResultsBar'
@@ -119,7 +121,15 @@ class Digest extends Component {
     this.retrieveStoryContentText(story)
   }
 
-  getSelectedStory = story => this.state.stories.find(stateStory => stateStory.id === story.id)
+  getSelectedStory = id => {
+    const selectedStory = this.state.stories.find(stateStory => stateStory.id === parseInt(id))
+    if (selectedStory && !this.state.selectedStoryContentText) {
+      this.retrieveStoryContentText(selectedStory)
+      const app = document.querySelector('.App')
+      app.classList.add('popup_is_shown')
+    }
+    return selectedStory
+  }
 
   clearSelectedStory = () => {
     const app = document.querySelector('.App')
@@ -164,6 +174,7 @@ class Digest extends Component {
     axios.get(storyUrl).then((res) => {
       const newList = cheerio.load(res.data)('.StandardArticleBody_body p')
       this.setState({
+        selectedStory: story,
         selectedStoryContentText: newList
       })
     })
@@ -174,6 +185,7 @@ class Digest extends Component {
     axios.get(storyUrl).then((res) => {
       const newList = cheerio.load(res.data)('.story-body__inner p')
       this.setState({
+        selectedStory: story,
         selectedStoryContentText: newList
       })
     })
@@ -187,16 +199,20 @@ class Digest extends Component {
       'BBC': this.scraperBBC,
       'Independent': this.scraperIndependent
     }
+
     const website = story.website.name
-    return (storyScrapeResult[website])(story)
+    return (storyScrapeResult[website])(story) // envoke ONLY the relevent method above
   }
 
   render () {
     const { toggleLike, handleSearchInput, setSelectedStory, getSelectedStory, clearSelectedStory, filteredStories, toggleFilter } = this
+    console.log(this.state.selectedStory)
     return (
       <div className='App'>
         <img src={require('../../icons/news-digest-logo.svg')} alt='news-digest-logo' />
         <h1 className='news-digest-title'>NEWS DIGEST</h1>
+        <button>Logout</button>
+
         <div>
           {
             !this.state.showFilters && <StorySearch
@@ -211,12 +227,12 @@ class Digest extends Component {
           }
           {
             this.state.showFilters &&
-              <StoryFilterSelector
-                filterTags={this.state.filterMetadata}
-                toggleFilter={toggleFilter}
-                selectedWebsites={this.state.selectedFilters.websites}
-                selectedCategories={this.state.selectedFilters.categories}
-              />
+            <StoryFilterSelector
+              filterTags={this.state.filterMetadata}
+              toggleFilter={toggleFilter}
+              selectedWebsites={this.state.selectedFilters.websites}
+              selectedCategories={this.state.selectedFilters.categories}
+            />
           }
           {
             !this.state.showFilters && <StoryFilterResultsBar
@@ -228,21 +244,28 @@ class Digest extends Component {
 
           }
           {this.state.showSavedStories
-            ? <button className={'saved-stories-back-to-feed-btn'} onClick={this.handleShowSavedStories}>BACK TO FEED</button>
-            : <button className={this.state.showSavedStories && 'saved-stories-btn'} onClick={this.handleShowSavedStories}>SAVED STORIES</button>
+            ? <Link to='/stories'><button className={'saved-stories-back-to-feed-btn'} onClick={this.handleShowSavedStories}>BACK TO FEED</button></Link>
+            : <Link to='/saved-stories'><button className={this.state.showSavedStories && 'saved-stories-btn'} onClick={this.handleShowSavedStories}>SAVED STORIES</button></Link>
           }
 
           <div className={this.state.selectedStory ? 'show_story content_wrapper' : 'content_wrapper'}>
+
             <Stories
               getStories={filteredStories}
               toggleLike={toggleLike}
               setSelectedStory={setSelectedStory}
             />
-            <StoryContent
-              selectedStory={this.state.selectedStory && getSelectedStory(this.state.selectedStory)}
-              selectedStoryContentText={this.state.selectedStoryContentText}
-              toggleLike={toggleLike}
-              clearSelectedStory={clearSelectedStory}
+
+            <Route exact path='/stories/:id' component={routerProps => {
+              return <StoryContent
+                selectedStory={getSelectedStory(routerProps.match.params.id)}
+                selectedStoryContentText={this.state.selectedStoryContentText}
+                toggleLike={toggleLike}
+                clearSelectedStory={clearSelectedStory}
+                {...routerProps}
+              />
+            }
+            }
             />
           </div>
         </div>
