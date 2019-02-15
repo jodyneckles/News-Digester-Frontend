@@ -1,4 +1,9 @@
+.story_content {
+    margin-left: 20px;
+}
+
 .content_wrapper .story_content {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     position: fixed;
     top: 0;
     right: 0;
@@ -41,3 +46,5 @@
     filter: blur(5px);
     z-index: 0;
 }
+
+

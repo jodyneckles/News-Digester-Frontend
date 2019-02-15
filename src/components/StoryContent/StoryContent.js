@@ -31,7 +31,7 @@ const StoryContent = ({ selectedStory, toggleLike, clearSelectedStory, selectedS
                 filled={selectedStory.liked}
               />
             </div>
-            <div dangerouslySetInnerHTML={{ __html: selectedStoryContentText }} />
+            <div className='story-content-text' dangerouslySetInnerHTML={{ __html: selectedStoryContentText }} />
             <button onClick={clearSelectedStory}>Go back</button>
           </div>
         }

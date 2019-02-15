@@ -187,7 +187,8 @@ class Digest extends Component {
     })
   }
 
-  handleShowSavedStories = () => {
+  handleShowSavedStories = (event) => {
+    event.preventDefault()
     this.setState({
       showSavedStories: !this.state.showSavedStories
     })
