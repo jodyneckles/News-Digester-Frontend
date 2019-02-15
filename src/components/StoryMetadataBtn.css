@@ -3,14 +3,15 @@
     border: none;
     color: #fff;
     outline: none;
-    font-size: 1.4em;
+    font-size: 1.0em;
     background: none;
     border-radius: 4px;
     padding: 0.5em 1em;
     border: none;
     color: #fff;
     outline: none;
-    margin: 0.5em;    
+    margin: 0.5em
+
 }
 .clicked {
     background-color: #eee;
