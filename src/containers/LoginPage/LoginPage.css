@@ -1,6 +1,42 @@
-.login-page {
+/* .login-page {
     color:#ffffff;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-style: normal;
     line-height: normal;
-}
+} */
+
+/* Split the screen in half */
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+  .row {
+      height: 50%;
+  }
+  
+  /* Control the left side */
+  .left {
+    left: 0;
+    background-color: #545F78;
+  }
+  
+  /* Control the right side */
+  .right {
+    right: 0;
+    background-color: #262A36;
+  }
+  
+  /* If you want the content centered horizontally and vertically */
+  .centered {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }

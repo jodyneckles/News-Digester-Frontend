@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.4.0",
+    "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
+    "material-ui": "^0.20.2",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-router-dom": "^4.3.1",

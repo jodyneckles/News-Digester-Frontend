@@ -215,6 +215,7 @@ class Digest extends Component {
       <div className='App'>
         <img src={require('../../icons/news-digest-logo.svg')} alt='news-digest-logo' />
         <h1 className='news-digest-title'>NEWS DIGEST</h1>
+        <h3>Hi, {(this.props.currentUser.user)}</h3>
         <Link to='/'><button>Logout</button></Link>
 
         <div>
