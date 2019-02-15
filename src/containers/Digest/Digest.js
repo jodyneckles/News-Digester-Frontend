@@ -12,7 +12,7 @@ import './Digest.css'
 
 const newStoriesUrl = 'http://localhost:3001/api/v1/stories'
 const savedStoriesUrl = 'http://localhost:3001/api/v1/saved-stories'
-const baseURL = "http://localhost:3001/api/v1/"
+const baseURL = 'http://localhost:3001/api/v1/'
 const cheerio = require('cheerio')
 const axios = require('axios')
 
@@ -253,14 +253,17 @@ class Digest extends Component {
     const { toggleLike, handleSearchInput, setSelectedStory, getSelectedStory, clearSelectedStory, filteredStories, toggleFilter } = this
     return (
       <div className='App'>
-        <div>
+        
+       
+
+
+        <div className='logo-container'>
           <img src={require('../../icons/news-digest-logo.svg')} alt='news-digest-logo' />
           <h1 className='news-digest-title'>NEWS DIGEST</h1>
         </div>
 
         <h3>Hi, {(this.props.currentUser.user)}</h3>
         <Link to='/'><button>Logout</button></Link>
-
         <div>
           {
             !this.state.showFilters && <StorySearch
@@ -268,11 +271,16 @@ class Digest extends Component {
               handleSearchInput={handleSearchInput}
             />
           }
-
+        </div>
+        <div>
           {this.state.showFilters
             ? <button className={'close-btn'} onClick={this.handleShowFilters}>CLOSE</button>
             : <button className={this.state.showFilters && 'filter-btn'} onClick={this.handleShowFilters}>FILTER</button>
           }
+        </div>
+
+        <div>
+
           {
             this.state.showFilters &&
             <StoryFilterSelector
