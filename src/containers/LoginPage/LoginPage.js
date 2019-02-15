@@ -44,8 +44,7 @@ class LoginPage extends React.Component {
 
   handleChange = event =>
     this.setState({
-      name: event.target.value,
-      password: event.target.value
+      [event.target.name]: event.target.value
     })
 
   render () {

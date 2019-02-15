@@ -1,10 +1,3 @@
-/* .login-page {
-    color:#ffffff;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-style: normal;
-    line-height: normal;
-} */
-
 /* Split the screen in half */
 .split {
     height: 100%;
@@ -17,12 +10,25 @@
   }
 
   .row {
-      height: 50%;
+    /* font-family: 'Montserrat', sans-serif; */
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1em;
+
+
+    height: 23%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5em;
   }
   
   /* Control the left side */
   .left {
-    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: #545F78;
   }
   
@@ -39,4 +45,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+  }
+
+  .MuiButton-containedPrimary-160 {
+    margin-top: 50px;
   }

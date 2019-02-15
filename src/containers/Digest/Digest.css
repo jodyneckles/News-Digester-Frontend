@@ -1,8 +1,7 @@
 .news-digest-title {
     color:#ffffff;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-style: normal;
-    line-height: normal;
+    font-family: 'Montserrat', sans-serif;
+    
 }
 
 .content_wrapper {
@@ -14,8 +13,10 @@
 
 }
 
-.filter-btn {
-    overflow: hidden;
+button {
+    border-width: 5em;
+    border: #5C5AFB;
+    background-color: none;
 }
 
 .close-btn {

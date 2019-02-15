@@ -12,6 +12,7 @@ import './Digest.css'
 
 const newStoriesUrl = 'http://localhost:3001/api/v1/stories'
 const savedStoriesUrl = 'http://localhost:3001/api/v1/saved-stories'
+const baseURL = "http://localhost:3001/api/v1/"
 const cheerio = require('cheerio')
 const axios = require('axios')
 
@@ -31,7 +32,8 @@ class Digest extends Component {
     },
     showFilters: false,
     showSavedStories: false,
-    selectedStoryContentText: undefined
+    selectedStoryContentText: undefined,
+    currentUserId: 1
   }
 
   getStoriesFromAPI = () => {
@@ -44,8 +46,17 @@ class Digest extends Component {
       .then(res => res.json())
   }
 
-  addLikesToApi = () => {
+  storyLikedByCurrentUser = (story) => {
+    const userIds = story.users.map(user => user.id)
+    return userIds.includes(this.state.currentUserId)
+  }
 
+  addLikesToState = () => {
+    const storyClone = [...this.state.stories]
+    const likeStories = storyClone.map(story =>
+      this.storyLikedByCurrentUser(story) ? { ...story, liked: true } : story
+    )
+    this.setState({ stories: likeStories })
   }
 
   componentDidMount () {
@@ -60,7 +71,7 @@ class Digest extends Component {
             categories: uniqueCategories
           }
         })
-      })
+      }).then(() => this.addLikesToState())
   }
 
   getStoriesOrLikeStories = () => {
@@ -106,16 +117,44 @@ class Digest extends Component {
     })
   }
 
+  createLikeInServer = id => {
+    fetch(baseURL + 'user_stories/create', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        story_id: id,
+        user_id: this.state.currentUserId
+      })
+    })
+  }
+
+  deleteLikeInServer = id => {
+    fetch(baseURL + 'user_stories/delete', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        story_id: id,
+        user_id: this.state.currentUserId
+      })
+    })
+  }
+
   toggleLike = (event, id) => {
     event.stopPropagation()
     event.preventDefault()
-
-    // console.log(this.state.stories)
+    const selectedStory = this.state.stories.find(stateStory => stateStory.id === parseInt(id))
     const storyClone = [...this.state.stories]
     const likeStories = storyClone.map(story =>
       story.id === id ? { ...story, liked: !story.liked } : story
     )
     this.setState({ stories: likeStories })
+    selectedStory.liked ? this.deleteLikeInServer(id) : this.createLikeInServer(id)
   }
 
   setSelectedStory = story => {
@@ -213,8 +252,11 @@ class Digest extends Component {
     const { toggleLike, handleSearchInput, setSelectedStory, getSelectedStory, clearSelectedStory, filteredStories, toggleFilter } = this
     return (
       <div className='App'>
-        <img src={require('../../icons/news-digest-logo.svg')} alt='news-digest-logo' />
-        <h1 className='news-digest-title'>NEWS DIGEST</h1>
+        <div>
+          <img src={require('../../icons/news-digest-logo.svg')} alt='news-digest-logo' />
+          <h1 className='news-digest-title'>NEWS DIGEST</h1>
+        </div>
+
         <h3>Hi, {(this.props.currentUser.user)}</h3>
         <Link to='/'><button>Logout</button></Link>
 

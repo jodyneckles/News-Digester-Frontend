@@ -1,11 +1,13 @@
 import React from 'react'
 import StoryMetadataBtn from '../../components/StoryMetadataBtn'
+import './StoryFilterSelector.css'
 
 const StoryFilterSelector = props => {
   const { filterTags, toggleFilter } = props
   // console.log(filterTags)
+
   return (
-    <div>
+    <div className='filters show-filters'>
       <div className='website-tags'>
         {
           filterTags.websites.map((website, index) => {

@@ -1,0 +1,19 @@
+.filters  {
+    position: fixed;
+    top: 0;
+    left: 15vw;
+    transform: translate(0, -100%);
+    width: 70vw;
+    background-color: #16171a;
+    height: 230px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+    align-items: center;
+    justify-content: center;
+  }
+
+.show-filters {
+    transform: translate(0%, 0%)
+}
