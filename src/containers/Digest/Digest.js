@@ -161,7 +161,6 @@ class Digest extends Component {
     const app = document.querySelector('.App')
     app.classList.add('popup_is_shown')
     this.setState({ selectedStory: story })
-    this.retrieveStoryContentText(story)
   }
 
   getSelectedStory = id => {
@@ -253,43 +252,56 @@ class Digest extends Component {
     const { toggleLike, handleSearchInput, setSelectedStory, getSelectedStory, clearSelectedStory, filteredStories, toggleFilter } = this
     return (
       <div className='App'>
-        
-       
+        <div className='header'>
+          <div className="header-left">
+            <div className='logo-container'>
+              <img src={require('../../icons/news-digest-logo.svg')} alt='news-digest-logo' />
+              <h1 className='news-digest-title'>NEWS DIGEST</h1>
+            </div>
 
+            <div className='header-filter-toggles'>
+              {!this.state.showFilters
+                && <button className={this.state.showFilters && 'filter-btn'} onClick={this.handleShowFilters}>FILTER</button>
+              }
+            </div>
+            {this.state.showSavedStories
+            ? <Link to='/stories'><button className={'saved-stories-back-to-feed-btn'} onClick={this.handleShowSavedStories}>BACK TO FEED</button></Link>
+            : <Link to='/stories/saved'><button className='saved-stories-btn' onClick={this.handleShowSavedStories}>SAVED STORIES</button></Link>
+          }
+          </div>
 
-        <div className='logo-container'>
-          <img src={require('../../icons/news-digest-logo.svg')} alt='news-digest-logo' />
-          <h1 className='news-digest-title'>NEWS DIGEST</h1>
-        </div>
-
-        <h3>Hi, {(this.props.currentUser.user)}</h3>
-        <Link to='/'><button>Logout</button></Link>
-        <div>
+          <div className="header-middle">
           {
-            !this.state.showFilters && <StorySearch
-              style={{ margin: '0 auto', maxWidth: 800 }}
-              handleSearchInput={handleSearchInput}
-            />
-          }
+              !this.state.showFilters && <StorySearch
+                style={{ margin: '0 auto', maxWidth: 800 }}
+                handleSearchInput={handleSearchInput}
+              />
+            }
+            {
+              this.state.showFilters &&
+              <StoryFilterSelector
+                filterTags={this.state.filterMetadata}
+                toggleFilter={toggleFilter}
+                selectedWebsites={this.state.selectedFilters.websites}
+                selectedCategories={this.state.selectedFilters.categories}
+              />
+            }
+          </div>
+
+          <div className="header-right">
+            <h3>Hi, {(this.props.currentUser.user)}</h3>
+            <Link to='/'><button>Logout</button></Link>
+            <br/>
+            <br/>
+
+            {this.state.showFilters
+              && <button className={'close-btn'} onClick={this.handleShowFilters}>CLOSE</button>
+              }            
+          </div>
+
         </div>
         <div>
-          {this.state.showFilters
-            ? <button className={'close-btn'} onClick={this.handleShowFilters}>CLOSE</button>
-            : <button className={this.state.showFilters && 'filter-btn'} onClick={this.handleShowFilters}>FILTER</button>
-          }
-        </div>
-
-        <div>
-
-          {
-            this.state.showFilters &&
-            <StoryFilterSelector
-              filterTags={this.state.filterMetadata}
-              toggleFilter={toggleFilter}
-              selectedWebsites={this.state.selectedFilters.websites}
-              selectedCategories={this.state.selectedFilters.categories}
-            />
-          }
+      
           {
             !this.state.showFilters && <StoryFilterResultsBar
               filterTags={this.state.filterMetadata}
@@ -299,10 +311,7 @@ class Digest extends Component {
             />
 
           }
-          {this.state.showSavedStories
-            ? <Link to='/stories'><button className={'saved-stories-back-to-feed-btn'} onClick={this.handleShowSavedStories}>BACK TO FEED</button></Link>
-            : <Link to='/stories/saved'><button className={this.state.showSavedStories && 'saved-stories-btn'} onClick={this.handleShowSavedStories}>SAVED STORIES</button></Link>
-          }
+        
 
           <div className={this.state.selectedStory ? 'show_story content_wrapper' : 'content_wrapper'}>
 
